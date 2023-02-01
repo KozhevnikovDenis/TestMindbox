@@ -8,17 +8,16 @@ namespace MindboxTest
         [TestMethod]
         public void GetAreaTest()
         {
-            double radius = 10.5;
-            double expectedArea = Math.PI * Math.Pow(radius, 2);
-            Figure f = new Circle(radius);
-            Assert.AreEqual(expectedArea, f.GetArea(), "error area");
+            var radius = 10.5;
+            var expectedArea = Math.PI * Math.Pow(radius, 2);
+            var figure = new Circle(radius);
+            Assert.AreEqual(expectedArea, figure.GetArea(), "error area");
         }
         [TestMethod]
         public void PositivityTest()
         {
-            double radius = -10.5;
-            Figure f;
-            Assert.ThrowsException<ArgumentOutOfRangeException>(() => f = new Circle(radius));
+            var radius = -10.5;
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => { var figure = new Circle(radius); });
         }
     }
 }
