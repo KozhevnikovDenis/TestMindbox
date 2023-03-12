@@ -13,9 +13,27 @@ namespace MindboxTest
             var sideB = 10.5;
             var sideC = 10.5;
             var perimeter = sideA + sideB + sideC;
-            var expectedArea = Math.Sqrt(0.5 * perimeter * (0.5 * perimeter - sideA) * (0.5 * perimeter - sideA) * (0.5 * perimeter - sideA));
+            var semiPerimeter = perimeter / 2;
+            var expectedArea = Math.Sqrt(semiPerimeter * (semiPerimeter - sideA) * (semiPerimeter - sideA) * (semiPerimeter - sideA));
             var figure = new Triangle(sideA, sideB, sideC);
-            Assert.AreEqual(expectedArea, figure.GetArea(), "error area");
+            Assert.AreEqual(expectedArea, figure.GetArea(), "error: calculation area");
+        }
+        [TestMethod]
+        public void IsRightTriangleTest()
+        {
+            var sideA = 3;
+            var sideB = 4;
+            var sideC = 5;
+            var expectedIsRightTriangle = true;
+            var figure = new Triangle(sideA, sideB, sideC);
+            Assert.AreEqual(expectedIsRightTriangle, figure.IsRightTriangle(), "error: this is right triangle");
+
+            sideA = 4;
+            sideB = 4;
+            sideC = 5;
+            expectedIsRightTriangle = false;
+            figure = new Triangle(sideA, sideB, sideC);
+            Assert.AreEqual(expectedIsRightTriangle, figure.IsRightTriangle(), "error: this is not right triangle");
         }
         [TestMethod]
         public void PositivityTest()

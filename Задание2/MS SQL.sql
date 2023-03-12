@@ -1,36 +1,42 @@
 CREATE TABLE Category
 (
-  Id INT PRIMARY KEY IDENTITY,
+  CategoryId INT PRIMARY KEY IDENTITY,
   CategoryName NVARCHAR(50) NOT NULL,
 );
 
 CREATE TABLE Product
 (
-  Id INT PRIMARY KEY IDENTITY,
+  ProductId INT PRIMARY KEY IDENTITY,
   ProductName NVARCHAR(50) NOT NULL,
-  CategoryID INT REFERENCES Category(Id) ON DELETE CASCADE,
 );
 
-INSERT INTO Category VALUES ('Tableware'), ('Fruit');
-
-INSERT INTO Product (ProductName, CategoryID) VALUES 
+CREATE TABLE ProductsCategories
 (
-  'Fork',
-  (SELECT Id from Category WHERE CategoryName='Tableware')
-),
-(
-  'Spoon',
-  (SELECT Id from Category WHERE CategoryName='Tableware')
-),
-(
-  'Apple',
-  (SELECT Id from Category WHERE CategoryName='Fruit')
-),
-(
-  'Apple',
-  (SELECT Id from Category WHERE CategoryName='Gardening')
+  ProductId INT FOREIGN KEY REFERENCES Product(ProductId),
+  CategoryId INT FOREIGN KEY REFERENCES Category(CategoryId),
+  PRIMARY KEY(ProductId, CategoryId),
 );
 
-INSERT INTO Product (ProductName) VALUES ('Shirt');
+INSERT INTO Category VALUES ('Tableware'), ('Fruit'), ('Gardening');
 
-SELECT Product.ProductName, Category.CategoryName FROM Category RIGHT JOIN Product ON Product.CategoryID = Category.Id;
+INSERT INTO Product VALUES ('Fork'), ('Spoon'), ('Apple'), ('Shirt');
+
+INSERT INTO ProductsCategories VALUES 
+(
+  (SELECT ProductId from Product WHERE ProductName='Fork'), 
+  (SELECT CategoryId from Category WHERE CategoryName='Tableware')
+), 
+(
+  (SELECT ProductId from Product WHERE ProductName='Spoon'), 
+  (SELECT CategoryId from Category WHERE CategoryName='Tableware')
+), 
+(
+  (SELECT ProductId from Product WHERE ProductName='Apple'),
+  (SELECT CategoryId from Category WHERE CategoryName='Fruit')
+),
+(
+  (SELECT ProductId from Product WHERE ProductName='Apple'), 
+  (SELECT CategoryId from Category WHERE CategoryName='Gardening')
+);
+
+SELECT Product.ProductName, Category.CategoryName FROM Product LEFT JOIN ProductsCategories ON Product.ProductId = ProductsCategories.ProductId LEFT JOIN Category ON ProductsCategories.CategoryId = Category.CategoryId;

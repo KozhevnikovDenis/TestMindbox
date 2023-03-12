@@ -11,7 +11,7 @@ namespace MindboxTest
             var radius = 10.5;
             var expectedArea = Math.PI * Math.Pow(radius, 2);
             var figure = new Circle(radius);
-            Assert.AreEqual(expectedArea, figure.GetArea(), "error area");
+            Assert.AreEqual(expectedArea, figure.GetArea(), "error: calculation area");
         }
         [TestMethod]
         public void PositivityTest()
