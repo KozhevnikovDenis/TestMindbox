@@ -13,6 +13,7 @@ namespace MindboxTest
             var figure = new Circle(radius);
             Assert.AreEqual(expectedArea, figure.GetArea(), "error: calculation area");
         }
+
         [TestMethod]
         public void PositivityTest()
         {
